@@ -2,7 +2,7 @@
   <header class="main-header">
     <h1 class="main-header__title">
       {{ appInfo.name }}
-      <span class="main-header__version-number">
+      <span class="main-header__version">
         {{ appInfo.version }}
       </span>
     </h1>
