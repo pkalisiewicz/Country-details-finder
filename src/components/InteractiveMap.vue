@@ -1,11 +1,17 @@
 <template>
-  <div>
-    hello
-  </div>
+  <section class="world-map">
+    <WorldMap />
+  </section>
 </template>
 
 <script>
-export default {};
+import WorldMap from "../assets/InteractiveMap.svg";
+export default {
+  name: "InteractiveMap",
+  components: {
+    WorldMap
+  }
+};
 </script>
 
 <style scoped>
