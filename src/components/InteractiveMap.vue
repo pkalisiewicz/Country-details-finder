@@ -1,5 +1,5 @@
 <template>
-  <section class="world-map">
+  <section class="world-map" id="world-map">
     <WorldMap />
   </section>
 </template>
@@ -14,5 +14,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.world-map {
+  height: 90%;
+  width: 90%;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
 </style>
