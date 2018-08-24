@@ -8,6 +8,9 @@ const URL_SETTINGS = {
   SEARCH_REGION: `${BASE_URL}/region/`
 };
 
-export default {
-  URL_SETTINGS
+const appInfo = {
+  name: "Country details finder",
+  version: "v1.0"
 };
+
+export { URL_SETTINGS, appInfo };
