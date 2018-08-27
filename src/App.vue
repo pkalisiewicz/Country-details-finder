@@ -4,11 +4,12 @@
       <Spinner />
     </div>
     <Header :appInfo="appInfo" />
-    <InteractiveMap />
+    <InteractiveMap :countriesData="countriesData" />
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import { appInfo } from "./settings/settings.js";
 import Header from "./components/Header";
 import InteractiveMap from "./components/InteractiveMap";
@@ -23,8 +24,16 @@ export default {
   data() {
     return {
       appInfo,
-      loading: false
+      loading: true,
+      countriesData: {}
     };
+  },
+  async created() {
+    const response = await axios("https://restcountries.eu/rest/v2/all");
+    if (response.data) {
+      this.countriesData = response.data;
+      this.loading = false;
+    }
   }
 };
 </script>
