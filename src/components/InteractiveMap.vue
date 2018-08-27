@@ -67,6 +67,7 @@ export default {
 
   &__map-region {
     border: 1px solid grey;
+    cursor: pointer;
     transition: 0.3s all ease;
 
     &:hover {
