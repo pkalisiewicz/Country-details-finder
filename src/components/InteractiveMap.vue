@@ -7,6 +7,8 @@
 <script>
 import WorldMap from "../assets/InteractiveMap.svg";
 import countriesData from "../assets/data.json";
+import swal from "sweetalert2";
+
 export default {
   name: "InteractiveMap",
   components: {
@@ -31,20 +33,29 @@ export default {
         document.querySelectorAll("#world-map path")
       );
       mapElements.forEach(path => {
+        const selectedCountry = {
+          name: path.dataset.name,
+          code: path.dataset.id
+        };
         path.classList.add("world-map__map-region");
+        if (this.findCountryDetails(selectedCountry)) {
+          path.classList.add("world-map__map-region--available");
+        }
       });
     },
     openCountry(e) {
-      if (!e.target.nodeName === "path") {
+      if (!(e.target.nodeName === "path")) {
         return false;
       }
-      const selectedCountry = {
-        name: e.target.dataset.name,
-        code: e.target.dataset.id
-      };
-      const countryDetails = this.findCountryDetails(selectedCountry);
-      if (!countryDetails) {
-        return false;
+      if (e.target.classList.contains("world-map__map-region--available")) {
+        return swal("", "That thing is still around?", "info");
+      } else {
+        return swal({
+          type: "error",
+          title: "Oops...",
+          text: "Country details not found...",
+          footer: "Please try other one!"
+        });
       }
     },
     findCountryDetails(selectedCountry) {
@@ -72,6 +83,10 @@ export default {
 
     &:hover {
       fill: red;
+    }
+
+    &--available {
+      fill: #00ff7f;
     }
   }
 }
