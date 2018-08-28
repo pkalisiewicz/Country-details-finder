@@ -38,13 +38,16 @@ export default {
         document.querySelectorAll("#world-map path")
       );
       mapElements.forEach(path => {
+        // add class have possibility to manipulate these elements in the future
+        path.classList.add("world-map__map-region");
         const selectedCountry = {
           name: path.dataset.name,
           code: path.dataset.id
         };
-        path.classList.add("world-map__map-region");
-        if (this.findCountryDetails(selectedCountry)) {
+        const countryDetails = this.findCountryDetails(selectedCountry);
+        if (countryDetails) {
           path.classList.add("world-map__map-region--available");
+          path.dataset["country"] = JSON.stringify(countryDetails);
         }
       });
     },
@@ -53,7 +56,42 @@ export default {
         return false;
       }
       if (e.target.classList.contains("world-map__map-region--available")) {
-        return swal("", "That thing is still around?", "info");
+        const countryDetails = JSON.parse(e.target.dataset.country);
+        return swal({
+          html: `
+          <section class="country">
+            <header class="country__title">${countryDetails.name}</header>
+            <table class="country__container">
+              <thead class="country__content">
+                <tr class="country__content-heading">
+                  <th class="country__content-name">Name</th>
+                  <th class="country__content-parameter">Parameter</th>
+                </tr>
+              </thead>
+              <tbody class="country__content-body">
+                <tr class="country__content-row">
+                  <td class="country__content-title">Capital city</td>
+                  <td class="country__content-value">${
+                    countryDetails.capital
+                  }</td>
+                </tr>
+                <tr class="country__content-row">
+                  <td class="country__content-title">Currency</td>
+                  <td class="country__content-value">
+                  ${countryDetails.currencies
+                    .map(currency => currency.name)
+                    .join(",")}</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+          `,
+          imageAlt: `${countryDetails.name}'s flag`,
+          imageClass: "country__flag",
+          imageUrl: `${countryDetails.flag}`,
+          showCloseButton: true,
+          focusConfirm: false
+        });
       } else {
         return swal({
           type: "error",
