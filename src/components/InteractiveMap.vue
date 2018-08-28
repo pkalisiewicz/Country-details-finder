@@ -80,7 +80,12 @@ export default {
                   <td class="country__content-value">
                   ${countryDetails.currencies
                     .map(currency => currency.name)
-                    .join(",")}</td>
+                    .join(", ")}</td>
+                </tr>
+                <tr class="country__content-row">
+                  <td class="country__content-title">Population</td>
+                  <td class="country__content-value">
+                  ${(countryDetails.population / 1000000).toFixed(2)} milions
                 </tr>
               </tbody>
             </table>
@@ -120,7 +125,7 @@ export default {
   width: 90%;
 
   &__map-region {
-    border: 1px solid grey;
+    border: 1px solid #837f7fad;
     cursor: pointer;
     transition: 0.3s all ease;
 
@@ -131,6 +136,24 @@ export default {
     &--available {
       fill: #00ff7f;
     }
+  }
+}
+
+.country {
+  &__flag {
+    border-radius: 50%;
+    height: 120px;
+    object-fit: cover;
+    width: 120px;
+  }
+
+  &__container {
+    margin-top: 3rem;
+    width: 100%;
+  }
+
+  &__content {
+    line-height: 2;
   }
 }
 </style>
