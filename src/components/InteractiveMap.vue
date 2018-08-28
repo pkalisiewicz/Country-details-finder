@@ -5,8 +5,8 @@
 </template>
 
 <script>
+import axios from "axios";
 import WorldMap from "../assets/InteractiveMap.svg";
-import countriesData from "../assets/data.json";
 import swal from "sweetalert2";
 
 export default {
@@ -16,12 +16,17 @@ export default {
   },
   data() {
     return {
-      countriesData
+      countriesData: []
     };
   },
-  mounted() {
-    this.addMapClickHandler();
-    this.addCountryClass();
+  async created() {
+    const response = await axios("https://restcountries.eu/rest/v2/all");
+    if (response.data) {
+      this.countriesData = response.data;
+      this.addMapClickHandler();
+      this.addCountryClass();
+      this.$emit("removeLoading");
+    }
   },
   methods: {
     addMapClickHandler() {
@@ -59,10 +64,10 @@ export default {
       }
     },
     findCountryDetails(selectedCountry) {
-      const resultOne = countriesData.find(
+      const resultOne = this.countriesData.find(
         country => country.name === selectedCountry.name
       );
-      const resultTwo = countriesData.find(
+      const resultTwo = this.countriesData.find(
         country => country.alpha2Code === selectedCountry.code
       );
       return resultOne ? resultOne : resultTwo;
@@ -82,7 +87,7 @@ export default {
     transition: 0.3s all ease;
 
     &:hover {
-      fill: red;
+      fill: #74b9ff;
     }
 
     &--available {
