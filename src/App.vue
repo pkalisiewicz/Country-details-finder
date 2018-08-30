@@ -1,11 +1,13 @@
 <template>
-  <div id="app">
-    <div class="loading" v-if="loading">
-      <Spinner />
+  <transition name="fade" appear>
+    <div id="app">
+      <div class="loading" v-if="loading">
+        <Spinner />
+      </div>
+      <Header :appInfo="appInfo" />
+      <InteractiveMap @removeLoading="removeLoading" />
     </div>
-    <Header :appInfo="appInfo" />
-    <InteractiveMap @removeLoading="removeLoading" />
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -72,5 +74,15 @@ export default {
   100% {
     transform: translate(50%);
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 2s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
