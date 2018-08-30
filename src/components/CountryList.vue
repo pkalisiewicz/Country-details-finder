@@ -1,12 +1,22 @@
 <template>
-  <div>
+  <section class="search">
+    <input type="text" v-model="searchInput" @input="findCountry">
 
-  </div>
+    {{searchInput}}
+  </section>
 </template>
 
 <script>
 export default {
-  name: "CountryList"
+  name: "CountryList",
+  data() {
+    return {
+      searchInput: ""
+    };
+  },
+  methods: {
+    findCountry() {}
+  }
 };
 </script>
 

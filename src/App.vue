@@ -5,8 +5,8 @@
         <spinner />
       </div>
       <main-header :appInfo="appInfo" />
-      <interactive-map @removeLoading="removeLoading" />
-      <country-list />
+      <interactive-map @removeLoading="removeLoading" @countriesData="setCountries"/>
+      <country-list v-if="renderList" />
     </div>
   </transition>
 </template>
@@ -32,12 +32,23 @@ export default {
     return {
       appInfo,
       loading: true,
-      countriesData: {}
+      countriesData: [],
+      renderList: false
     };
   },
   methods: {
     removeLoading() {
       this.loading = false;
+    },
+    setCountries(countries) {
+      this.countriesData = countries;
+    }
+  },
+  watch: {
+    countriesData() {
+      if (this.countriesData) {
+        this.renderList = true;
+      }
     }
   }
 };
