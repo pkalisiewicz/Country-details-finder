@@ -2,24 +2,30 @@
   <transition name="fade" appear>
     <div id="app">
       <div class="loading" v-if="loading">
-        <Spinner />
+        <spinner />
       </div>
-      <Header :appInfo="appInfo" />
-      <InteractiveMap @removeLoading="removeLoading" />
+      <main-header :appInfo="appInfo" />
+      <interactive-map @removeLoading="removeLoading" />
+      <country-list />
     </div>
   </transition>
 </template>
 
 <script>
+//assets
 import { appInfo } from "./settings/settings.js";
-import Header from "./components/Header";
-import InteractiveMap from "./components/InteractiveMap";
 import Spinner from "./assets/spinner.svg";
+
+// components
+import MainHeader from "./components/MainHeader";
+import InteractiveMap from "./components/InteractiveMap";
+import CountryList from "./components/CountryList";
 export default {
   name: "App",
   components: {
-    Header,
+    MainHeader,
     InteractiveMap,
+    CountryList,
     Spinner
   },
   data() {
